@@ -34,3 +34,9 @@ client.on('ready', () => {
         await client.destroy();
     });
 });
+
+
+client.on("vote_update", (vote) => {
+    /** The vote that was affected: */
+    console.log(vote);
+});

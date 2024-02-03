@@ -6,6 +6,7 @@ exports.ExposeStore = (moduleRaidStr) => {
     // eslint-disable-next-line no-undef
     window.mR = moduleRaid();
     window.Store = Object.assign({}, window.mR.findModule(m => m.default && m.default.Chat)[0].default);
+      console.log(window.Store);
     window.Store.AppState = window.mR.findModule('Socket')[0].Socket;
     window.Store.Conn = window.mR.findModule('Conn')[0].Conn;
     window.Store.BlockContact = window.mR.findModule('blockContact')[0];
@@ -554,6 +555,16 @@ exports.LoadUtils = () => {
         delete msg.pendingAckUpdate;
 
         return msg;
+    };
+
+    window.WWebJS.getPollVoteModel = (vote) => {
+          const _vote = vote.serialize();
+          if (vote.parentMsgKey) {
+              const msg = window.Store.Msg.get(vote.parentMsgKey);
+              msg && (_vote.parentMessage = window.WWebJS.getMessageModel(msg));
+              return _vote;
+          }
+          return null;
     };
 
 
